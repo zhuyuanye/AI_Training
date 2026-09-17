@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>邮箱必填｜静态 HTML 原型样例</title>
+<style>
+:root{color-scheme:light;--ink:#173044;--muted:#526576;--line:#dbe4eb;--blue:#225bd9;--red:#bb3248}
+*{box-sizing:border-box}
+body{margin:0;background:#edf2f6;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55}
+main{max-width:1500px;margin:auto;padding:32px}
+.eyebrow{font-size:15px;color:#53697d;letter-spacing:.12em;font-weight:700}
+h1{font-size:36px;line-height:1.25;margin:12px 0}
+.subtitle{font-size:18px;color:var(--muted);margin:0 0 24px}
+.notice{background:#fff8df;border:1px solid #e8d9a6;padding:12px 16px;border-radius:12px;margin-bottom:26px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 8px 24px #18314406}
+.card header{padding:20px 24px 16px;border-bottom:1px solid var(--line)}
+.number{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.08em}
+h2{font-size:23px;margin:6px 0 0}
+.body{padding:22px 24px}
+.label{font-size:15px;font-weight:600;margin-bottom:8px}
+.field{background:#fff;border:1px solid #c5d1dc;border-radius:8px;padding:11px 13px;min-height:48px;font-size:17px}
+.field.invalid{border-color:var(--red);background:#fffafb}
+.field.placeholder{color:#71808e}
+.row{margin-bottom:20px}
+.error{color:var(--red);font-size:15px;margin:8px 0}
+.info{background:#eef4ff;border:1px solid #cad9fb;padding:12px;border-radius:9px;font-size:15px;margin-bottom:20px}
+.success{background:#edf9f2;border:1px solid #b5dac4;border-radius:10px;color:#216a48;padding:14px;margin-bottom:20px;font-weight:600}
+.button{background:var(--blue);color:#fff;border-radius:9px;padding:11px 16px;text-align:center;font-weight:600}
+.small{font-size:14px;color:var(--muted)}
+.rule{padding-top:17px;border-top:1px solid var(--line);font-size:15px;color:var(--muted);margin-top:20px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}
+.badge{display:inline-block;font-size:13px;background:#eaf1f8;padding:2px 8px;border-radius:5px;margin-bottom:12px}
+footer{display:flex;gap:20px;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:24px}
+@media(max-width:960px){.grid{grid-template-columns:1fr}main{padding:20px}h1{font-size:28px}footer{display:block}}
+@media print{body{background:white}main{padding:12px}.card{break-inside:avoid;box-shadow:none}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<main>
+<div class="eyebrow">BA 08 · REQ-DEMO-EMAIL-001 · PROTO-v1</div>
+<h1>用户管理：邮箱必填的三个页面状态</h1>
+<p class="subtitle">在同一个已有系统变更中，看清楚输入、反馈和保存结果。</p>
+<div class="notice"><strong>静态教学原型</strong> · 所有状态均为预置展示，无后端请求或数据写入；布局为示意，完整邮箱格式沿用真实项目规则。</div>
+<section class="grid" aria-label="新增、编辑与保存结果">
+<article class="card">
+<header><div class="number">PAGE-01 / 新增</div><h2>空邮箱不能保存</h2></header>
+<div class="body">
+<div class="row"><div class="label">用户名</div><div class="field">demo.alice</div></div>
+<div class="row"><div class="label">邮箱 <span aria-hidden="true" style="color:var(--red)">*</span></div><div class="field invalid placeholder">未填写</div><p class="error">请输入邮箱</p></div>
+<div class="button" aria-label="保存按钮的静态示意">保存（状态示意）</div>
+<p class="small">页面阻止提交，保留已填内容供纠正。</p>
+<div class="rule">AC-01 / AC-05 / AC-06<br>不传、空值或仅约定空白都不满足必填；直接 API 也要拒绝。</div>
+</div>
+</article>
+<article class="card">
+<header><div class="number">PAGE-02 / 编辑历史用户</div><h2>提醒补齐资料</h2></header>
+<div class="body">
+<div class="info">这个用户尚未填写邮箱。<br><strong>保存前请补齐邮箱。</strong></div>
+<div class="row"><div class="label">显示名</div><div class="field">历史用户</div></div>
+<div class="row"><div class="label">邮箱 <span aria-hidden="true" style="color:var(--red)">*</span></div><div class="field placeholder">请输入邮箱</div></div>
+<div class="rule">AC-04 / AC-06<br>历史账号仍可按原规则登录、查询；编辑保存时需补邮箱，失败不修改原资料。</div>
+</div>
+</article>
+<article class="card">
+<header><div class="number">PAGE-03 / 纠正后</div><h2>保存清理后的邮箱</h2></header>
+<div class="body">
+<div class="success">✓ 保存成功（预置结果）</div>
+<div class="row"><div class="label">提交值（引号展示首尾空格）</div><div class="field mono">" alice@example.com "</div></div>
+<div class="row"><div class="label">再次查询的保存值</div><div class="field mono">alice@example.com</div></div>
+<div class="rule">AC-02 / AC-03<br>只清理约定的首尾空白，不删除内部字符，也不自行重写邮箱格式标准。</div>
+</div>
+</article>
+</section>
+<footer><span>范围：管理端新增、编辑及其保存接口；不扩展导入、个人资料或通知功能。</span><span>示例产物 · 非真实执行证据</span></footer>
+</main>
+</body>
+</html>
+
